@@ -7,13 +7,18 @@ plt.ylabel("Number of Cases")
 
 # Each date has the countries' case reports
 # countries = {country_name : country}
-# country = [{date : YYYY-MM-DD, cases, etc}]
+# country = [{Date : YYYY-MM-DD, Country : name, cases, etc}]
 
 countries = []
 country = []
+temp_data = []
+counter = 1
+
 with open("countries-aggregated-2021-07-26.csv") as data:
     reader = csv.DictReader(data)
-    for i in reader:
-        
+    for line in reader:
+        keys = list(line) # list of keys
+        for i in range(2, len(keys)):
+            line[keys[i]] = int(line[keys[i]]) # ints confirmed, recovered, deaths
 
 # plt.show()
