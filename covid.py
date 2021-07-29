@@ -1,24 +1,28 @@
 from matplotlib import pyplot as plt
-import cs50, csv
+from cs50 import SQL
 
 plt.title("Covid Cases")
 plt.xlabel("Time")
 plt.ylabel("Number of Cases")
 
 # Each date has the countries' case reports
-# countries = {country_name : country}
-# country = [{Date : YYYY-MM-DD, Country : name, cases, etc}]
 
-countries = []
-country = []
-temp_data = []
-counter = 1
+db = SQL("sqlite:///data.db")
 
-with open("countries-aggregated-2021-07-26.csv") as data:
-    reader = csv.DictReader(data)
-    for line in reader:
-        keys = list(line) # list of keys
-        for i in range(2, len(keys)):
-            line[keys[i]] = int(line[keys[i]]) # ints confirmed, recovered, deaths
+# create list of dates for x axis
+datesDict = db.execute("SELECT Date FROM countries WHERE Country = 'Afghanistan'")
+dates = []
+for i in datesDict:
+    dates.append(i['Date'])
 
-# plt.show()
+# create list of confirmed cases
+select_country = "United Kingdom"
+confirmed = db.execute("SELECT Confirmed FROM countries WHERE Country = ?", select_country)
+us_confirmed = []
+
+for i in confirmed:
+    us_confirmed.append(i['Confirmed'])
+
+# plot
+plt.plot(dates, us_confirmed, color = "red")
+plt.show()
