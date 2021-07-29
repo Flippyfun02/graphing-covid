@@ -18,11 +18,11 @@ for i in datesDict:
 # create list of confirmed cases
 select_country = "United Kingdom"
 confirmed = db.execute("SELECT Confirmed FROM countries WHERE Country = ?", select_country)
-us_confirmed = []
+uk_confirmed = []
 
 for i in confirmed:
-    us_confirmed.append(i['Confirmed'])
+    uk_confirmed.append(i['Confirmed'])
 
 # plot
-plt.plot(dates, us_confirmed, color = "red")
+plt.plot(dates, uk_confirmed, color = "red")
 plt.show()
