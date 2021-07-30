@@ -1,5 +1,11 @@
 from matplotlib import pyplot as plt
 from cs50 import SQL
+import datetime
+
+def make_list(query, thelist, key): # format list so not dict
+    for i in query:
+        thelist.append(i[key])
+    return thelist
 
 plt.title("Covid Cases")
 plt.xlabel("Time")
@@ -12,16 +18,16 @@ db = SQL("sqlite:///data.db")
 # create list of dates for x axis
 datesDict = db.execute("SELECT Date FROM countries WHERE Country = 'Afghanistan'")
 dates = []
-for i in datesDict:
-    dates.append(i['Date'])
+dates = make_list(datesDict, dates, 'Date')
+for i in range(len(x)): # format date
+    dates[i] = datetime.datetime.strptime(dates[i], '%Y-%m-%d').strftime("%b %Y")
 
-# create list of confirmed cases
+# create list of confirmed cases for y axis
 select_country = "United Kingdom"
 find_confirmed = db.execute("SELECT Confirmed FROM countries WHERE Country = ?", select_country)
 confirmed = []
-
-for i in find_confirmed:
-    confirmed.append(i['Confirmed'])
+confirmed = make_list(find_confirmed, confirmed, "Confirmed")
+ax = plt.axes()
 
 # plot
 plt.plot(dates, confirmed, color = "red")
