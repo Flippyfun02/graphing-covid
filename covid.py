@@ -11,6 +11,7 @@ def make_list(query, thelist, key): # format list so not dict
 if len(sys.argv) != 2:
     sys.exit("Usage: python3 covid.py 'Country'")
 
+# set up figure
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.set_xlabel('Time')
@@ -42,6 +43,8 @@ while True:
         break
     except: # if not, still do not return error
         print("Country is unavailable.")
+
+# format graph
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
 fig.autofmt_xdate()
 plt.show()
