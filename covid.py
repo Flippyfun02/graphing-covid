@@ -19,7 +19,7 @@ db = SQL("sqlite:///data.db")
 datesDict = db.execute("SELECT Date FROM countries WHERE Country = 'Afghanistan'")
 dates = []
 dates = make_list(datesDict, dates, 'Date')
-for i in range(len(x)): # format date
+for i in range(len(dates)): # format date
     dates[i] = datetime.datetime.strptime(dates[i], '%Y-%m-%d').strftime("%b %Y")
 
 # create list of confirmed cases for y axis
@@ -27,7 +27,6 @@ select_country = "United Kingdom"
 find_confirmed = db.execute("SELECT Confirmed FROM countries WHERE Country = ?", select_country)
 confirmed = []
 confirmed = make_list(find_confirmed, confirmed, "Confirmed")
-ax = plt.axes()
 
 # plot
 plt.plot(dates, confirmed, color = "red")
