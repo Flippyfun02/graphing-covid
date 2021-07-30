@@ -12,11 +12,9 @@ if len(sys.argv) != 2:
     sys.exit("Usage: python3 covid.py 'Country'")
 
 # set up figure
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.set_xlabel('Time')
-ax.set_ylabel('Number of Cases')
-ax.set_title(f"{sys.argv[1]}'s Covid Cases")
+plt.title("Covid Cases")
+plt.xlabel("Time")
+plt.ylabel("Number of Cases")
 
 # Each date has the countries' case reports
 
@@ -39,12 +37,12 @@ while True:
             confirmed[i] = int(confirmed[i])
 
         # plot
-        ax.plot(dates, confirmed, color = "red")
+        plt.plot(dates, confirmed, color = "red")
         break
     except: # if not, still do not return error
         print("Country is unavailable.")
 
 # format graph
-ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
-fig.autofmt_xdate()
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+plt.gcf().autofmt_xdate()
 plt.show()
